@@ -5,8 +5,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using Text_Raffle.Properties;
-using Excel = Microsoft.Office.Interop.Excel;
-using System.Runtime.InteropServices;
 using System.Media;
 
 namespace Text_Raffle
@@ -43,56 +41,26 @@ namespace Text_Raffle
         {
             entries = new List<string>();
 
-            if (txtSource.Text.Contains("csv") || txtSource.Text.Contains("txt"))
-            {
-                StreamReader reader = new StreamReader(txtSource.Text);
-                string line = "";
-                while (!reader.EndOfStream)
-                {
-                    line = reader.ReadLine().Trim();
-                    if (line == "" || line.Contains("name") || line.Contains("Name"))
-                    {
-                        continue;
-                    }
+            StreamReader reader = new StreamReader(@"C:\Raffle\Main.csv");
+            string line = "";
 
-                    entries.Add(line);
+            while (!reader.EndOfStream)
+            {
+                line = reader.ReadLine().Trim();
+                if (line == "" || line.Contains("name") || line.Contains("Name"))
+                {
+                    continue;
+                }
+
+                var delimitedLine = line.Split(',');
+
+                if ((delimitedLine[4].ToLower() == "yes") && (delimitedLine[1] != " " && delimitedLine[1] != "" && delimitedLine[1] != string.Empty) && (delimitedLine[2] != " " && delimitedLine[2] != "" && delimitedLine[2] != string.Empty))
+                {
+                    entries.Add(delimitedLine[1] + " " + delimitedLine[2]);
                 }
             }
 
-            else if (txtSource.Text.Contains("xlsx"))
-            {
-                Excel.Application xlApp = new Excel.Application();
-                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(txtSource.Text);
-                Excel._Worksheet xlWorksheet = (Excel.Worksheet)xlWorkbook.Sheets[1];
-                Excel.Range xlRange = xlWorksheet.UsedRange;
-
-                int lastUsedRow = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value,
-                               System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-                               Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious,
-                               false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
-
-                for (int i = 2; i <= lastUsedRow; i++)
-                {
-                    entries.Add((string)(xlWorksheet.Cells[i, 1] as Excel.Range).Value);
-                }
-
-                //cleanup
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                //release com objects to fully kill excel process from running in the background
-                Marshal.ReleaseComObject(xlRange);
-                Marshal.ReleaseComObject(xlWorksheet);
-
-                //close and release
-                xlWorkbook.Close();
-                Marshal.ReleaseComObject(xlWorkbook);
-
-                //quit and release
-                xlApp.Quit();
-                Marshal.ReleaseComObject(xlApp);
-            }
-
+            txtSource.Text = "C:\\Raffle\\Main.csv";
             lblNumEntries.Text = entries.Count.ToString();
             btnStart.Enabled = true;
             btnStart.Visible = true;
@@ -121,6 +89,8 @@ namespace Text_Raffle
 
             btnStart.Enabled = false;
             btnStart.Visible = false;
+
+            loadFile();
         }
 
         // Handles the Click event of the btnExit control. Exits the application.
@@ -140,21 +110,6 @@ namespace Text_Raffle
 
             tmMain.Interval = 10;
             tmMain.Enabled = true;
-        }
-
-        // Triggers the Open File Dialog, and executes the loadFile method.
-        private void btnSource_Click(object sender, EventArgs e)
-        {
-            ofd.Filter = "Excel files (*.xlsx)|*.xlsx|CSV files (*.csv)| *.csv|Text files (*.txt)| *.txt";
-            ofd.ShowDialog();
-            
-            if (ofd.FileName == "")
-            {
-                return;
-            }
-
-            txtSource.Text = ofd.FileName;
-            loadFile();
         }
 
         // Main timer that randomizes the names.
@@ -199,19 +154,19 @@ namespace Text_Raffle
         private void btnStart_Paint(object sender, PaintEventArgs e)
         {
             ControlPaint.DrawBorder(e.Graphics, btnStart.ClientRectangle,
-                SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
-                SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
-                SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
-                SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset);
+                                    SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+                                    SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+                                    SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+                                    SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset);
         }
 
         private void gbSource_Paint(object sender, PaintEventArgs e)
         {
             ControlPaint.DrawBorder(e.Graphics, gbSource.ClientRectangle,
-                SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
-                SystemColors.ControlLightLight, 0, ButtonBorderStyle.Outset,
-                SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
-                SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset);
+                                    SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+                                    SystemColors.ControlLightLight, 0, ButtonBorderStyle.Outset,
+                                    SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+                                    SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset);
         }
 
         // Opens up the won entry list.

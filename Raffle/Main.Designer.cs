@@ -51,7 +51,6 @@
             this.gbSource.Controls.Add(this.llView);
             this.gbSource.Controls.Add(this.lblNumEntries);
             this.gbSource.Controls.Add(this.lblEntries);
-            this.gbSource.Controls.Add(this.btnSource);
             this.gbSource.Controls.Add(this.txtSource);
             this.gbSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbSource.Location = new System.Drawing.Point(373, 454);
@@ -59,19 +58,20 @@
             this.gbSource.Size = new System.Drawing.Size(441, 85);
             this.gbSource.TabIndex = 0;
             this.gbSource.TabStop = false;
-            this.gbSource.Text = "Source List";
+            this.gbSource.Text = "Source";
             this.gbSource.Paint += new System.Windows.Forms.PaintEventHandler(this.gbSource_Paint);
             // 
             // llView
             // 
+            this.llView.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.llView.AutoSize = true;
             this.llView.LinkColor = System.Drawing.Color.Silver;
-            this.llView.Location = new System.Drawing.Point(294, 59);
+            this.llView.Location = new System.Drawing.Point(159, 61);
             this.llView.Name = "llView";
-            this.llView.Size = new System.Drawing.Size(141, 21);
+            this.llView.Size = new System.Drawing.Size(111, 21);
             this.llView.TabIndex = 4;
             this.llView.TabStop = true;
-            this.llView.Text = "View Won Entries";
+            this.llView.Text = "View Winners";
             this.llView.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.llView.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llView_LinkClicked);
             // 
@@ -96,26 +96,28 @@
             // btnSource
             // 
             this.btnSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSource.Enabled = false;
             this.btnSource.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.btnSource.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSource.Location = new System.Drawing.Point(381, 28);
+            this.btnSource.Location = new System.Drawing.Point(906, 454);
             this.btnSource.Name = "btnSource";
             this.btnSource.Size = new System.Drawing.Size(41, 23);
             this.btnSource.TabIndex = 1;
             this.btnSource.Text = "...";
             this.btnSource.UseVisualStyleBackColor = true;
-            this.btnSource.Click += new System.EventHandler(this.btnSource_Click);
+            this.btnSource.Visible = false;
             // 
             // txtSource
             // 
             this.txtSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSource.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSource.Enabled = false;
             this.txtSource.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSource.Location = new System.Drawing.Point(19, 30);
+            this.txtSource.Location = new System.Drawing.Point(17, 30);
             this.txtSource.Name = "txtSource";
-            this.txtSource.Size = new System.Drawing.Size(356, 27);
+            this.txtSource.Size = new System.Drawing.Size(418, 27);
             this.txtSource.TabIndex = 0;
             // 
             // lblWinner
@@ -186,6 +188,7 @@
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.gbSource);
+            this.Controls.Add(this.btnSource);
             this.Controls.Add(this.lblWinner);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

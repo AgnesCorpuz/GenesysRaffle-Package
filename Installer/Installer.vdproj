@@ -277,7 +277,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Year End Raffle 2018"
         "ProductCode" = "8:{F3F073FC-9A84-47E5-9B8E-B0733E580C81}"
-        "PackageCode" = "8:{CEC5A60C-1508-4B57-8410-A2DF4C7734F2}"
+        "PackageCode" = "8:{9212E092-D7D3-45FF-9BA7-AC4E59C9241B}"
         "UpgradeCode" = "8:{E64611B1-F12E-4D86-A716-F4121404430E}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
